@@ -1,0 +1,524 @@
+[
+  {
+    "id": 1,
+    "style": "No Style",
+    "avatar": "",
+    "style_cls": "Photograph",
+    "style_lang_default": "Photograph",
+    "prompt": ""
+  },
+  {
+    "id": 2,
+    "style": "Bokeh",
+    "avatar": "",
+    "style_cls": "Photograph",
+    "style_lang_default": "Photograph",
+    "prompt": ""
+  },
+  {
+    "id": 3,
+    "style": "Food",
+    "avatar": "",
+    "style_cls": "Photograph",
+    "style_lang_default": "Photograph",
+    "prompt": "."
+  },
+  {
+    "id": 4,
+    "style": "iPhone",
+    "avatar": "",
+    "style_cls": "Photograph",
+    "style_lang_default": "Photograph",
+    "prompt": ""
+  },
+  {
+    "id": 5,
+    "style": "Film Noir",
+    "avatar": "",
+    "style_cls": "Photograph",
+    "style_lang_default": "Photograph",
+    "prompt": "."
+  },
+  {
+    "id": 6,
+    "style": "Cubist",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 7,
+    "style": "Pixel",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 8,
+    "style": "Dark Fantasy",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 9,
+    "style": "Van Gogh",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 10,
+    "style": "Caricature",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 11,
+    "style": "Statue",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 12,
+    "style": "Watercolor",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 13,
+    "style": "Oil Painting",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 50,
+    "style": "Pattern",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 51,
+    "style": "Painting",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 52,
+    "style": "Lego character",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 54,
+    "style": "Doodle",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 55,
+    "style": "Fantasy",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 56,
+    "style": "Concept",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 53,
+    "style": "Lego blocks",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 61,
+    "style": "Barbie world",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 62,
+    "style": "Cyberpunk",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 64,
+    "style": "Pop",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 65,
+    "style": "Steampunk",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+  {
+    "id": 66,
+    "style": "Cubism",
+    "avatar": "",
+    "style_cls": "Art",
+    "style_lang_default": "Art",
+    "prompt": ""
+  },
+
+
+  {
+    "id": 14,
+    "style": "Manga",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 15,
+    "style": "Sketch",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 16,
+    "style": "Comic",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 17,
+    "style": "Kawaii",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 18,
+    "style": "Chibi",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 19,
+    "style": "Disney",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 20,
+    "style": "Pixar",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 21,
+    "style": "Funko Pop",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 49,
+    "style": "Furry Art",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 58,
+    "style": "Shrek",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 60,
+    "style": "Barbie doll",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 63,
+    "style": "Bratz Doll",
+    "avatar": "",
+    "style_cls": "Cartoon",
+    "style_lang_default": "Cartoon",
+    "prompt": ""
+  },
+  {
+    "id": 22,
+    "style": "Bubble Bobble",
+    "avatar": "",
+    "style_cls": "Game",
+    "style_lang_default": "Game",
+    "prompt": "A"
+  },
+  {
+    "id": 23,
+    "style": "Retro Arcade",
+    "avatar": "",
+    "style_cls": "Game",
+    "style_lang_default": "Game",
+    "prompt": ""
+  },
+  {
+    "id": 24,
+    "style": "Minecraft",
+    "avatar": "",
+    "style_cls": "Game",
+    "style_lang_default": "Game",
+    "prompt": ""
+  },
+  {
+    "id": 25,
+    "style": "GTA",
+    "avatar": "",
+    "style_cls": "Game",
+    "style_lang_default": "Game",
+    "prompt": ""
+  },
+  {
+    "id": 26,
+    "style": "Pokemon",
+    "avatar": "",
+    "style_cls": "Game",
+    "style_lang_default": "Game",
+    "prompt": ""
+  },
+  {
+    "id": 47,
+    "style": "DND",
+    "avatar": "",
+    "style_cls": "Game",
+    "style_lang_default": "Game",
+    "prompt": ""
+  },
+  {
+    "id": 59,
+    "style": "Fortnite",
+    "avatar": "",
+    "style_cls": "Game",
+    "style_lang_default": "Game",
+    "prompt": ""
+  },
+  {
+    "id": 27,
+    "style": "3D",
+    "avatar": "",
+    "style_cls": "Logo",
+    "style_lang_default": "Logo",
+    "prompt": ""
+  },
+  {
+    "id": 28,
+    "style": "Minimalist",
+    "avatar": "",
+    "style_cls": "Logo",
+    "style_lang_default": "Logo",
+    "prompt": ""
+  },
+  {
+    "id": 29,
+    "style": "Cartoon",
+    "avatar": "",
+    "style_cls": "Logo",
+    "style_lang_default": "Logo",
+    "prompt": ""
+  },
+  {
+    "id": 30,
+    "style": "Energetic",
+    "avatar": "",
+    "style_cls": "Logo",
+    "style_lang_default": "Logo",
+    "prompt": ""
+  },
+  {
+    "id": 31,
+    "style": "Cute",
+    "avatar": "",
+    "style_cls": "Logo",
+    "style_lang_default": "Logo",
+    "prompt": ""
+  },
+  {
+    "id": 57,
+    "style": "Graffiti",
+    "avatar": "",
+    "style_cls": "Logo",
+    "style_lang_default": "Logo",
+    "prompt": ""
+  },
+  {
+    "id": 32,
+    "style": "Default",
+    "avatar": "",
+    "style_cls": "Tattoo",
+    "style_lang_default": "Tattoo",
+    "prompt": ""
+  },
+  {
+    "id": 33,
+    "style": "Line Art",
+    "avatar": "",
+    "style_cls": "Tattoo",
+    "style_lang_default": "Tattoo",
+    "prompt": ""
+  },
+  {
+    "id": 67,
+    "style": "Mandala",
+    "avatar": "",
+    "style_cls": "Tattoo",
+    "style_lang_default": "Tattoo",
+    "prompt": ""
+  },
+  {
+    "id": 34,
+    "style": "2D",
+    "avatar": "",
+    "style_cls": "Icon",
+    "style_lang_default": "Icon",
+    "prompt": ""
+  },
+  {
+    "id": 35,
+    "style": "3D",
+    "avatar": "",
+    "style_cls": "Icon",
+    "style_lang_default": "Icon",
+    "prompt": ""
+  },
+  {
+    "id": 36,
+    "style": "Plush",
+    "avatar": "",
+    "style_cls": "Text",
+    "style_lang_default": "Text",
+    "prompt": ""
+  },
+  {
+    "id": 37,
+    "style": "Graffiti",
+    "avatar": "",
+    "style_cls": "Text",
+    "style_lang_default": "Text",
+    "prompt": ""
+  },
+  {
+    "id": 38,
+    "style": "Hand-drawn",
+    "avatar": "",
+    "style_cls": "Text",
+    "style_lang_default": "Text",
+    "prompt": ""
+  },
+  {
+    "id": 39,
+    "style": "Balloon",
+    "avatar": "",
+    "style_cls": "Text",
+    "style_lang_default": "Text",
+    "prompt": ""
+  },
+  {
+    "id": 40,
+    "style": "Illustration",
+    "avatar": "",
+    "style_cls": "Sticker",
+    "style_lang_default": "Sticker",
+    "prompt": ""
+  },
+  {
+    "id": 41,
+    "style": "Sketch",
+    "avatar": "",
+    "style_cls": "Sticker",
+    "style_lang_default": "Sticker",
+    "prompt": ""
+  },
+  {
+    "id": 42,
+    "style": "Colorful",
+    "avatar": "",
+    "style_cls": "Sticker",
+    "style_lang_default": "Sticker",
+    "prompt": ""
+  },
+  {
+    "id": 43,
+    "style": "Cartoon",
+    "avatar": "",
+    "style_cls": "Sticker",
+    "style_lang_default": "Sticker",
+    "prompt": ""
+  },
+  {
+    "id": 44,
+    "style": "Kawaii",
+    "avatar": "",
+    "style_cls": "Sticker",
+    "style_lang_default": "Sticker",
+    "prompt": ""
+  },
+  {
+    "id": 45,
+    "style": "Q-version",
+    "avatar": "",
+    "style_cls": "Sticker",
+    "style_lang_default": "Sticker",
+    "prompt": ""
+  }
+]
