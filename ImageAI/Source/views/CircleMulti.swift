@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CircleMulti: View {
     @State var beforeImage: UIImage?
-    @State var styleId: Int = 0
+    @State var styleId: UUID
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select",doneButtonColor: .orange)
     
 
@@ -27,7 +27,7 @@ struct CircleMulti: View {
                         Image(uiImage: newImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 80)
+                            .frame(width: 50)
                             .clipShape(Circle())
                     } else {
                         buttonCricle()
@@ -50,7 +50,7 @@ struct CircleMulti: View {
                                 Spacer()
                                 Button {
                                     beforeImage = nil
-                                    styleId = 0
+                                    styleId = UUID()
                                 } label: {
                                     Image("ic_close")
                                         .resizable()
@@ -86,6 +86,6 @@ struct CircleMulti: View {
     }
 }
 
-#Preview {
-    CircleMulti()
-}
+//#Preview {
+//    CircleMulti()
+//}

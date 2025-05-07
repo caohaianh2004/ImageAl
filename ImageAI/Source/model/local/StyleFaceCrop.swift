@@ -11,7 +11,6 @@ struct StyleFaceCrop:  Identifiable, Codable, Hashable{
     let id: UUID
     let imageName: String
     let parentId: Int
-    
 }
 
 class Facecrop: ObservableObject {

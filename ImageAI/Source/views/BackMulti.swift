@@ -6,7 +6,8 @@ struct BackMulti: View {
     @Binding var imageUrl: URL?
     @Binding var styleId: Int
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select", doneButtonColor: .orange)
-    
+    @State private var selectedParenId: Int?
+    @StateObject var face = Facecrop(Datafacecrop: dsFaceCrop)
     
     var body: some View {
         ZStack {
@@ -90,8 +91,29 @@ struct BackMulti: View {
                         .padding(.top, 10)
                         .bold()
                     
-                  CircleMulti(beforeImage: befoImage, styleId: styleId)
+                    let filteredFaces = dsFaceCrop.filter { $0.parentId == styleId }
                     
+                    ScrollView(.horizontal) {
+                        HStack(spacing: 0) {
+                            ForEach(filteredFaces, id: \.id) { face in
+                                VStack(spacing: 8) {
+                                    CircleMulti(beforeImage: befoImage, styleId: face.id)
+                                        .padding()
+                                    
+                                    Image(systemName: "arrow.down")
+                                        .foregroundColor(.white)
+                                        .padding(.vertical, 4)
+                                        
+                                    
+                                    KFImage(URL(string: face.imageName))
+                                        .resizable()
+                                        .frame(width: 70, height: 70)
+                                        .clipShape(Circle())
+                                }
+                                .padding(.horizontal, 4)
+                            }
+                        }
+                    }
                 }
             }
         }
