@@ -23,6 +23,14 @@ class Base64Image {
             }
         }
     }
+    static func base64DecodeToImage(_ base64: String) -> UIImage? {
+           guard let data = Data(base64Encoded: base64),
+                 let image = UIImage(data: data) else {
+               return nil
+           }
+           return image
+       }
+    
 }
 
 func loadImageFromURL(_ urlString: String, completion: @escaping (UIImage?) -> Void) {

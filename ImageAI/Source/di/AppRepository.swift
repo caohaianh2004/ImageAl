@@ -26,8 +26,6 @@ protocol AppRepositoryProtocol {
     func createSwapFace(swapfaceRequest: SwapFace) async -> Result<EnhanceCreateResponse, Error>
     //Multi Face
     func createMuliFace(multifaceRequest: MultiSFace) async -> Result<EnhanceCreateResponse, Error>
-    //Face Crop
-    
 }
 
 class AppRepository: AppRepositoryProtocol {
@@ -146,5 +144,4 @@ class AppRepository: AppRepositoryProtocol {
             return .failure(error)
         }
     }
-
 }

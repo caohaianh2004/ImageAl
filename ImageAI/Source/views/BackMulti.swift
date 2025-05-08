@@ -16,12 +16,13 @@ struct BackMulti: View {
                 CroppedPhotosPicker(style: .default, options: croppingOptions, selection: $befoImage) { rect in
                     Logger.success("Did crop to rect: \(rect)")
                     imageUrl = nil
+                    styleId = 0
                 } didCancel: {
                     Logger.success("Did cancel")
                 } label: {
                     ZStack {
                         if let newImage = befoImage {
-                           Image(uiImage: newImage)
+                            Image(uiImage: newImage)
                                 .resizable()
                                 .frame(width: 300, height: 300)
                                 .aspectRatio(contentMode: .fit)
@@ -91,19 +92,24 @@ struct BackMulti: View {
                         .padding(.top, 10)
                         .bold()
                     
-                    let filteredFaces = dsFaceCrop.filter { $0.parentId == styleId }
-                    
+                    let filteredFaces: [StyleFaceCrop] = {
+                        if befoImage != nil {
+                            return dsFaceCrop.filter { $0.parentId == 0 }
+                        } else {
+                            return dsFaceCrop.filter { $0.parentId == styleId }
+                        }
+                    }()
+
                     ScrollView(.horizontal) {
                         HStack(spacing: 0) {
                             ForEach(filteredFaces, id: \.id) { face in
                                 VStack(spacing: 8) {
-                                    CircleMulti(beforeImage: befoImage, styleId: face.id)
+                                    CircleMulti(beforeImage: befoImage, styleId: styleId)
                                         .padding()
                                     
                                     Image(systemName: "arrow.down")
                                         .foregroundColor(.white)
                                         .padding(.vertical, 4)
-                                        
                                     
                                     KFImage(URL(string: face.imageName))
                                         .resizable()

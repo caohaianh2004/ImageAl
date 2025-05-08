@@ -9,10 +9,9 @@ import SwiftUI
 
 struct CircleMulti: View {
     @State var beforeImage: UIImage?
-    @State var styleId: UUID
+    @State var styleId: Int = 0
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select",doneButtonColor: .orange)
     
-
     var body: some View {
         ZStack {
             BackgroundView()
@@ -50,7 +49,7 @@ struct CircleMulti: View {
                                 Spacer()
                                 Button {
                                     beforeImage = nil
-                                    styleId = UUID()
+                                    styleId = 0
                                 } label: {
                                     Image("ic_close")
                                         .resizable()

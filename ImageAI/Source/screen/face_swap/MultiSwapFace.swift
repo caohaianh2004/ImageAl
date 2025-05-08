@@ -7,14 +7,19 @@
 
 import SwiftUI
 import Kingfisher
+import PhotosUI
 
 struct MultiSwapFace: View {
+    @EnvironmentObject var router: Router
+    @ObservedObject var enhanceViewModel: EnhanceRestoreViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     @StateObject private var multi = MultiFace(Datamultiface: dsMultiface)
     @State private var befoImage: UIImage? = nil
     @State private var imageUrl: URL? = nil
     @State private var styleId: Int = 0
     @State private var currentPopup: PopupType? = nil
     @State private var faceImage: [UIImage] = []
+    @State private var isselectedPhotto = false
     var body: some View {
         ZStack {
             BackgroundView()
@@ -108,6 +113,6 @@ struct MultiSwapFace: View {
 }
 
 #Preview {
-    MultiSwapFace()
+    MultiSwapFace(enhanceViewModel: EnhanceRestoreViewModel(repository: AppDIContainer.shared.appRepository))
 }
 

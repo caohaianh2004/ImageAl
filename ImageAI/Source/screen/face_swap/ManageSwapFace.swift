@@ -26,7 +26,7 @@ struct ManageSwapFace: View {
                     if selectedTab == 0 {
                         Swapface(enhanceViewModel: enhanceViewModel)
                     } else if selectedTab == 1 {
-                        MultiSwapFace()
+                        MultiSwapFace(enhanceViewModel: enhanceViewModel)
                     }
                 }
             }

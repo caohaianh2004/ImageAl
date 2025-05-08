@@ -361,7 +361,8 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 113,
         style: "Creative",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_113_face_Face_woman_0004_batch_1.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_113_face_Face_woman_0004_batch_1.webp", 
+        head_show: false
     ),
     StyleHeadShot(
         id: 147,
@@ -384,21 +385,24 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 114,
         style: "Creative",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_114_face_Face_woman_0004_batch_1.webp", head_show: true
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_114_face_Face_woman_0004_batch_1.webp",
+        head_show: true
     ),
     StyleHeadShot(
         id: 84,
         sort: 105,
         style: "Creative",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_105_face_Face_woman_0005_batch_1.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_105_face_Face_woman_0005_batch_1.webp", 
+        head_show: false
     ),
     StyleHeadShot(
         id: 95,
         sort: 117,
         style: "Creative",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_117_face_Face_woman_0007_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_117_face_Face_woman_0007_batch_0.webp", 
+        head_show: false
     ),
     StyleHeadShot(
         id: 141,
@@ -413,7 +417,8 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 116,
         style: "Creative",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_116_face_Face_woman_0007_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_116_face_Face_woman_0007_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 159,
@@ -444,7 +449,8 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 104,
         style: "Creative",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_104_face_Face_woman_0004_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_104_face_Face_woman_0004_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 157,
@@ -483,7 +489,8 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 108,
         style: "Creative",
         gender: "Man",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_108_face_Face_man_0008_batch_1.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_108_face_Face_man_0008_batch_1.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 142,
@@ -538,7 +545,8 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 43,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_43_face_Face_woman_0009_batch_1.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_43_face_Face_woman_0009_batch_1.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 158,
@@ -553,7 +561,8 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 40,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_40_face_Face_woman_0007_batch_1.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_40_face_Face_woman_0007_batch_1.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 35,
@@ -568,35 +577,40 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 46,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_46_face_Face_woman_0007_batch_1.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_46_face_Face_woman_0007_batch_1.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 41,
         sort: 42,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_42_face_Face_woman_0009_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_42_face_Face_woman_0009_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 44,
         sort: 45,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_45_face_Face_woman_0004_batch_1.webp", head_show: true
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_45_face_Face_woman_0004_batch_1.webp",
+        head_show: true
     ),
     StyleHeadShot(
         id: 98,
         sort: 120,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_120_face_Face_woman_0002_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_120_face_Face_woman_0002_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 93,
         sort: 115,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_115_face_Face_woman_0007_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_115_face_Face_woman_0007_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 149,
@@ -619,21 +633,24 @@ let dsheadshot: [StyleHeadShot] = [
         sort: 41,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_41_face_Face_woman_0003_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_41_face_Face_woman_0003_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 97,
         sort: 119,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_119_face_Face_woman_0009_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_119_face_Face_woman_0009_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 43,
         sort: 44,
         style: "Art",
         gender: "Woman",
-        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_44_face_Face_woman_0003_batch_0.webp", head_show: false
+        avatar: "https://pub-static.aiease.ai/headshotAvatar%2Fstyle_44_face_Face_woman_0003_batch_0.webp",
+        head_show: false
     ),
     StyleHeadShot(
         id: 31,
