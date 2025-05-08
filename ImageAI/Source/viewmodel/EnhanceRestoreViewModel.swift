@@ -15,32 +15,31 @@ public class EnhanceRestoreViewModel: ObservableObject {
     private var isSecondItemShown: Bool = false
 
     @Published private(set) var state: EaseViewState = EaseViewState()
-    @Published var croppedFaces: [UIImage] = []
     
     init(repository: AppRepositoryProtocol) {
         self.repository = repository
     }
     
-    func fetchCreateImages(multi: UIImage, face: UIImage) async {
-        state = EaseViewState(isLoading: true)
-        
-        async let multiBase64 = Base64Image.base64EncodeImage(multi)
-        async let faceBase64 = Base64Image.base64EncodeImage(face)
-        
-        let (multiBase64Str, faceBase64Str) = await (multiBase64, faceBase64)
-        
-        let newRequest = MultiSFace(face: [multiBase64Str], imageName: [faceBase64Str])
-        Logger.success("\(newRequest)")
-        let result = await repository.createMuliFace(multifaceRequest: newRequest)
-        
-        switch result {
-        case .success(let data):
-            Logger.success("Start create image: \(data.sessionId)")
-            getImageData(taskId: data.sessionId)
-        case .failure(let error):
-            self.state = EaseViewState(error: error.localizedDescription)
-        }
-    }
+//    func fetchCreateImages(multi: UIImage, face: UIImage) async {
+//        state = EaseViewState(isLoading: true)
+//        
+//        async let multiBase64 = Base64Image.base64EncodeImage(multi)
+//        async let faceBase64 = Base64Image.base64EncodeImage(face)
+//        
+//        let (multiBase64Str, faceBase64Str) = await (multiBase64, faceBase64)
+//        
+//        let newRequest = MultiSFace(face: [multiBase64Str], imageName: [faceBase64Str])
+//        Logger.success("\(newRequest)")
+//        let result = await repository.createMuliFace(multifaceRequest: newRequest)
+//        
+//        switch result {
+//        case .success(let data):
+//            Logger.success("Start create image: \(data.sessionId)")
+//            getImageData(taskId: data.sessionId)
+//        case .failure(let error):
+//            self.state = EaseViewState(error: error.localizedDescription)
+//        }
+//    }
     
     func fetchCreateImages(originalImage: UIImage, faceImage: UIImage) async {
         state = EaseViewState(isLoading: true)
@@ -63,6 +62,23 @@ public class EnhanceRestoreViewModel: ObservableObject {
         }
     }
     
+    func fetchCreateImages(facecropCreateRequest: FaceCrop, uiImage: UIImage) async {
+        state = EaseViewState(isLoading: true)
+        let base64Str = await Base64Image.base64EncodeImage(uiImage)
+        
+        let newRequest = FaceCrop(imageName: [base64Str])
+        Logger.success("\(newRequest)")
+        let result = await repository.createFaceCrop(facecropRequest: newRequest)
+        
+        switch result {
+        case .success(let data):
+            Logger.success("Start create image: \(data.sessionId)")
+            getImageData(taskId: data.sessionId)
+        case .failure(let error):
+            self.state = EaseViewState(error: error.localizedDescription)
+        }
+    }
+
     func fetchCreateImages(headshotCreateRequest:HeadShort, uiImage: UIImage) async {
         state = EaseViewState(isLoading: true)
         let base64Str = await Base64Image.base64EncodeImage(uiImage)

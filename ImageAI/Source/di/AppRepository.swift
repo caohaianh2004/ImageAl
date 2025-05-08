@@ -26,6 +26,8 @@ protocol AppRepositoryProtocol {
     func createSwapFace(swapfaceRequest: SwapFace) async -> Result<EnhanceCreateResponse, Error>
     //Multi Face
     func createMuliFace(multifaceRequest: MultiSFace) async -> Result<EnhanceCreateResponse, Error>
+    //Face Crop
+    func createFaceCrop(facecropRequest: FaceCrop) async -> Result<EnhanceCreateResponse, Error>
 }
 
 class AppRepository: AppRepositoryProtocol {
@@ -138,6 +140,16 @@ class AppRepository: AppRepositoryProtocol {
     func createMuliFace(multifaceRequest: MultiSFace) async -> Result<EnhanceCreateResponse, Error> {
         do {
             let data = try await networkManager.requestNewApi(endpoint: .multiface, body: multifaceRequest)
+            let decodeData = try JSONDecoder().decode(EnhanceCreateResponse.self, from: data)
+            return .success(decodeData)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    func createFaceCrop(facecropRequest: FaceCrop) async -> Result<EnhanceCreateResponse, Error> {
+        do {
+            let data = try await networkManager.requestNewApi(endpoint: .facecrop, body: facecropRequest)
             let decodeData = try JSONDecoder().decode(EnhanceCreateResponse.self, from: data)
             return .success(decodeData)
         } catch {

@@ -2,21 +2,30 @@ import SwiftUI
 import Kingfisher
 
 struct BackMulti: View {
+    @ObservedObject var enhanceViewModel: EnhanceRestoreViewModel
     @Binding var befoImage: UIImage?
     @Binding var imageUrl: URL?
     @Binding var styleId: Int
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select", doneButtonColor: .orange)
     @State private var selectedParenId: Int?
     @StateObject var face = Facecrop(Datafacecrop: dsFaceCrop)
+    @State private var showFaces: Bool = false
     
     var body: some View {
         ZStack {
             BackgroundView()
             VStack {
+               
                 CroppedPhotosPicker(style: .default, options: croppingOptions, selection: $befoImage) { rect in
                     Logger.success("Did crop to rect: \(rect)")
                     imageUrl = nil
                     styleId = 0
+                    if let img = befoImage {
+                        Task {
+                            await enhanceViewModel.fetchCreateImages(facecropCreateRequest: FaceCrop(imageName: []), uiImage: img)
+                        }
+                    }
+
                 } didCancel: {
                     Logger.success("Did cancel")
                 } label: {
@@ -94,37 +103,38 @@ struct BackMulti: View {
                     
                     let filteredFaces: [StyleFaceCrop] = {
                         if befoImage != nil {
-                            return dsFaceCrop.filter { $0.parentId == 0 }
+                            return dsFaceCrop.filter { $0.parentId == 0 || $0.parentId == nil}
                         } else {
                             return dsFaceCrop.filter { $0.parentId == styleId }
                         }
                     }()
-
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 0) {
-                            ForEach(filteredFaces, id: \.id) { face in
-                                VStack(spacing: 8) {
-                                    CircleMulti(beforeImage: befoImage, styleId: styleId)
-                                        .padding()
-                                    
-                                    Image(systemName: "arrow.down")
-                                        .foregroundColor(.white)
-                                        .padding(.vertical, 4)
-                                    
-                                    KFImage(URL(string: face.imageName))
-                                        .resizable()
-                                        .frame(width: 70, height: 70)
-                                        .clipShape(Circle())
+                    
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 0) {
+                                ForEach(filteredFaces, id: \.id) { face in
+                                    VStack(spacing: 8) {
+                                        CircleMulti(beforeImage: befoImage, styleId: styleId)
+                                            .padding()
+                                        
+                                        Image(systemName: "arrow.down")
+                                            .foregroundColor(.white)
+                                            .padding(.vertical, 4)
+                                        
+                                        KFImage(URL(string: face.imageName))
+                                            .resizable()
+                                            .frame(width: 70, height: 70)
+                                            .clipShape(Circle())
+                                    }
+                                    .padding(.horizontal, 4)
                                 }
-                                .padding(.horizontal, 4)
                             }
                         }
-                    }
                 }
             }
         }
     }
 }
+
 
 func backButton() -> some View {
     ZStack {

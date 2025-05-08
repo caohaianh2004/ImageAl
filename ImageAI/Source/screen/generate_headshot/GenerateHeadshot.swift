@@ -384,6 +384,4 @@ struct GenerateHeadshot: View {
     }
 }
 
-//#Preview {
-//GenerateHeadshot()
-//}
+

@@ -13,20 +13,21 @@ struct MultiSwapFace: View {
     @EnvironmentObject var router: Router
     @ObservedObject var enhanceViewModel: EnhanceRestoreViewModel
     @EnvironmentObject var userViewModel: UserViewModel
+    @State private var currentPopup: PopupType? = nil
     @StateObject private var multi = MultiFace(Datamultiface: dsMultiface)
     @State private var befoImage: UIImage? = nil
     @State private var imageUrl: URL? = nil
     @State private var styleId: Int = 0
-    @State private var currentPopup: PopupType? = nil
     @State private var faceImage: [UIImage] = []
     @State private var isselectedPhotto = false
+    
     var body: some View {
         ZStack {
             BackgroundView()
             ScrollView {
                 VStack {
                     BackMulti (
-                        befoImage: $befoImage,
+                        enhanceViewModel: enhanceViewModel, befoImage: $befoImage,
                         imageUrl: $imageUrl,
                         styleId: $styleId
                     )
