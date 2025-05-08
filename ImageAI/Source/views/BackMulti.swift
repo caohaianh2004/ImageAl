@@ -1,3 +1,10 @@
+//
+//  FaceSwapMuti.swift
+//  ImageAI
+//
+//  Created by Boss on 06/05/2025.
+//
+
 import SwiftUI
 import Kingfisher
 
@@ -15,17 +22,10 @@ struct BackMulti: View {
         ZStack {
             BackgroundView()
             VStack {
-               
                 CroppedPhotosPicker(style: .default, options: croppingOptions, selection: $befoImage) { rect in
                     Logger.success("Did crop to rect: \(rect)")
                     imageUrl = nil
                     styleId = 0
-                    if let img = befoImage {
-                        Task {
-                            await enhanceViewModel.fetchCreateImages(facecropCreateRequest: FaceCrop(imageName: []), uiImage: img)
-                        }
-                    }
-
                 } didCancel: {
                     Logger.success("Did cancel")
                 } label: {
@@ -109,26 +109,36 @@ struct BackMulti: View {
                         }
                     }()
                     
-                        ScrollView(.horizontal) {
-                            HStack(spacing: 0) {
-                                ForEach(filteredFaces, id: \.id) { face in
-                                    VStack(spacing: 8) {
-                                        CircleMulti(beforeImage: befoImage, styleId: styleId)
-                                            .padding()
-                                        
-                                        Image(systemName: "arrow.down")
-                                            .foregroundColor(.white)
-                                            .padding(.vertical, 4)
-                                        
-                                        KFImage(URL(string: face.imageName))
-                                            .resizable()
-                                            .frame(width: 70, height: 70)
-                                            .clipShape(Circle())
-                                    }
-                                    .padding(.horizontal, 4)
+                    ScrollView(.horizontal) {
+                        HStack(spacing: 0) {
+                            ForEach(filteredFaces, id: \.id) { face in
+                                VStack(spacing: 8) {
+                                    CircleMulti(beforeImage: befoImage, styleId: styleId)
+                                        .padding()
+                                    
+                                    Image(systemName: "arrow.down")
+                                        .foregroundColor(.white)
+                                        .padding(.vertical, 4)
+                                    
+                                    KFImage(URL(string: face.imageName))
+                                        .resizable()
+                                        .frame(width: 70, height: 70)
+                                        .clipShape(Circle())
                                 }
+                                .padding(.horizontal, 4)
                             }
                         }
+                    }
+                }
+            }
+        }
+        .onChange(of: befoImage) { newImage in
+            if let image = newImage{
+                Task{
+                    await enhanceViewModel.fetchCreateImages(
+                        facecropCreateRequest: FaceCrop(
+                            imageName: []
+                    ), uiImage: image)
                 }
             }
         }
