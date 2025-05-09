@@ -8,9 +8,9 @@
 import Foundation
 
 struct FaceCrop: Decodable, Encodable , Equatable, Hashable{
-    var imageName: [String]
+    var images: [String]
     
-    init(imageName: [String]) {
-        self.imageName = imageName
+    init(images: [String]) {
+        self.images = images
     }
 }

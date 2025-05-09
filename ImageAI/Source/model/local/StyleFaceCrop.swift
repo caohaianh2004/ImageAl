@@ -10,7 +10,7 @@ import Foundation
 struct StyleFaceCrop:  Identifiable, Codable, Hashable{
     let id: Int
     let imageName: String
-    let parentId: Int
+    let parentId: Int?
 }
 
 class Facecrop: ObservableObject {

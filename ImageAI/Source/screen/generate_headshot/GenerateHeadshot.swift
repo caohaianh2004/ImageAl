@@ -245,7 +245,7 @@ struct GenerateHeadshot: View {
                         }
                     }
                     
-                    GenerateButtonView(
+                    GenerateButtonView (
                         isShowBackground: beforeImage != nil,
                         actionButton: {
                             guard let beforeImage = beforeImage else {

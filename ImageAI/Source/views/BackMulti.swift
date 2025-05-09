@@ -17,7 +17,7 @@ struct BackMulti: View {
     @State private var selectedParenId: Int?
     @StateObject var face = Facecrop(Datafacecrop: dsFaceCrop)
     @State private var showFaces: Bool = false
-    
+
     var body: some View {
         ZStack {
             BackgroundView()
@@ -103,12 +103,12 @@ struct BackMulti: View {
                     
                     let filteredFaces: [StyleFaceCrop] = {
                         if befoImage != nil {
-                            return dsFaceCrop.filter { $0.parentId == 0 || $0.parentId == nil}
+                            return dsFaceCrop.filter { $0.parentId == 0 || $0.parentId == nil }
                         } else {
                             return dsFaceCrop.filter { $0.parentId == styleId }
                         }
                     }()
-                    
+
                     ScrollView(.horizontal) {
                         HStack(spacing: 0) {
                             ForEach(filteredFaces, id: \.id) { face in
@@ -131,14 +131,14 @@ struct BackMulti: View {
                     }
                 }
             }
-        }
-        .onChange(of: befoImage) { newImage in
-            if let image = newImage{
-                Task{
-                    await enhanceViewModel.fetchCreateImages(
-                        facecropCreateRequest: FaceCrop(
-                            imageName: []
-                    ), uiImage: image)
+        }  
+        .onChange(of: befoImage) { _, newImage in
+            if let image = newImage {
+                Task {
+                    await enhanceViewModel.fetchCreateImages (
+                        facecropCreateRequest: FaceCrop(images: []),
+                        uiImage: image
+                    )
                 }
             }
         }
