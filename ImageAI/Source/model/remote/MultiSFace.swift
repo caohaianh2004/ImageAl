@@ -8,11 +8,11 @@
 import Foundation
 
 struct MultiSFace: Decodable, Encodable , Equatable, Hashable {
-    var face: [String]
-    var imageName: [String]
+    var original: String
+    var images: [String]
     
-    init(face: [String], imageName: [String]) {
-        self.face = face
-        self.imageName = imageName
+    init(original: String, images: [String]) {
+        self.original = original
+        self.images = images
     }
 }

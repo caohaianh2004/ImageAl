@@ -20,7 +20,30 @@ public class EnhanceRestoreViewModel: ObservableObject {
         self.repository = repository
     }
     
-    
+    func fetchCreateImages(origin: UIImage, faces: [UIImage]) async {
+        state = EaseViewState(isLoading: true)
+        
+        let originBase64Str = await Base64Image.base64EncodeImage(origin)
+
+        var faceBase64List: [String] = []
+        for face in faces {
+            let base64 = await Base64Image.base64EncodeImage(face)
+            faceBase64List.append(base64)
+        }
+
+        let newRequest = MultiSFace(original: originBase64Str, images: faceBase64List)
+        Logger.success("\(newRequest)")
+        let result = await repository.createMuliFace(multifaceRequest: newRequest)
+
+        switch result {
+        case .success(let data):
+            Logger.success("Start create image: \(data.sessionId)")
+            getImageData(taskId: data.sessionId)
+        case .failure(let error):
+            self.state = EaseViewState(error: error.localizedDescription)
+        }
+    }
+
     func fetchCreateImages(originalImage: UIImage, faceImage: UIImage) async {
         state = EaseViewState(isLoading: true)
         

@@ -18,11 +18,10 @@ struct Swapface: View {
     }
     @ObservedObject var enhanceViewModel: EnhanceRestoreViewModel
     @State private var currentPopup: PopupType? = nil
+    @EnvironmentObject var userViewModel: UserViewModel
     @State private var imageUrl: URL? = nil
     @State private var selectionImage: UIImage? = nil
-    @EnvironmentObject var userViewModel: UserViewModel
-    @State private var beforeImage: UIImage? 
-    @State private var afterImage: UIImage?
+    @State private var beforeImage: UIImage?
     
     var body: some View {
         ZStack {

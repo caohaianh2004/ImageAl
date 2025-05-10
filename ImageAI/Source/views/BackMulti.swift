@@ -3,9 +3,10 @@ import Kingfisher
 
 struct BackMulti: View {
     @ObservedObject var enhanceViewModel: EnhanceRestoreViewModel
-    @Binding var befoImage: UIImage?
+    @Binding var selectionImage: UIImage?
     @Binding var imageUrl: URL?
     @Binding var styleId: Int
+    @Binding var befoImage: UIImage?
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select", doneButtonColor: .orange)
 
     @State private var filteredFaces = [StyleFaceCrop]()
@@ -15,7 +16,7 @@ struct BackMulti: View {
         ZStack {
             BackgroundView()
             VStack {
-                CroppedPhotosPicker(style: .default, options: croppingOptions, selection: $befoImage) { rect in
+                CroppedPhotosPicker(style: .default, options: croppingOptions, selection: $selectionImage) { rect in
                     Logger.success("Did crop to rect: \(rect)")
                     imageUrl = nil
                     styleId = 0
@@ -23,7 +24,7 @@ struct BackMulti: View {
                     Logger.success("Did cancel")
                 } label: {
                     ZStack {
-                        if let newImage = befoImage {
+                        if let newImage = selectionImage {
                             Image(uiImage: newImage)
                                 .resizable()
                                 .frame(width: 300, height: 300)
@@ -42,13 +43,13 @@ struct BackMulti: View {
                         }
                     }
                     .overlay {
-                        if befoImage != nil || imageUrl != nil {
+                        if selectionImage != nil || imageUrl != nil {
                             ZStack {
                                 VStack {
                                     HStack {
                                         Spacer()
                                         Button {
-                                            befoImage = nil
+                                            selectionImage = nil
                                             imageUrl = nil
                                             styleId = 0
                                             filteredFaces = []
@@ -102,8 +103,9 @@ struct BackMulti: View {
                 }
             }
         }
-        .onChange(of: befoImage) { _, newImage in
+        .onChange(of: selectionImage) { _, newImage in
             if let image = newImage {
+                befoImage = image
                 Task {
                     await enhanceViewModel.fetchCreateImages(
                         facecropCreateRequest: FaceCrop(images: []),
@@ -122,7 +124,7 @@ struct BackMulti: View {
         }
 
         .onChange(of: styleId) { _, newId in
-            if befoImage == nil {
+            if selectionImage == nil {
                 filteredFaces = dsFaceCrop.filter { $0.parentId == newId }
             }
         }

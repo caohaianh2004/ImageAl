@@ -17,9 +17,11 @@ struct MultiSwapFace: View {
     @StateObject private var multi = MultiFace(Datamultiface: dsMultiface)
     @State private var befoImage: UIImage? = nil
     @State private var imageUrl: URL? = nil
+    @State private var selectionImage: UIImage? = nil
     @State private var styleId: Int = 0
     @State private var faceImage: [UIImage] = []
     @State private var isselectedPhotto = false
+    @State private var selectedStyle = ""
     
     var body: some View {
         ZStack {
@@ -27,9 +29,11 @@ struct MultiSwapFace: View {
             ScrollView {
                 VStack {
                     BackMulti (
-                        enhanceViewModel: enhanceViewModel, befoImage: $befoImage,
+                        enhanceViewModel: enhanceViewModel,
+                        selectionImage: $selectionImage,
                         imageUrl: $imageUrl,
-                        styleId: $styleId
+                        styleId: $styleId,
+                        befoImage: $befoImage
                     )
                     
                     Text("abc_Avatar_style")
@@ -96,19 +100,80 @@ struct MultiSwapFace: View {
                     }
                 }
                 
-                FaceSwapButtonView (
-                    isShowButton: befoImage != nil && imageUrl != nil,
+                FaceSwapButtonView(
+                    isShowButton: befoImage != nil && (imageUrl != nil || selectionImage != nil),
                     actionButton: {
-                        guard let befoImage = befoImage, imageUrl != imageUrl else {
+                        guard let befoImage = befoImage, (imageUrl != nil || selectionImage != nil) else {
                             currentPopup = .image
                             return
                         }
                         Task {
-                            
+                            if let selectionImage = selectionImage {
+                                faceImage = [selectionImage]
+                            } else if let imageUrl = imageUrl {
+                                if let loadedImage = await loadImage(from: imageUrl) {
+                                    faceImage = [loadedImage]
+                                } else {
+                                    faceImage = []
+                                }
+                            } else {
+                                faceImage = []
+                            }
+                            guard !faceImage.isEmpty else {
+                                           currentPopup = .image
+                                           return
+                                       }
+                            await enhanceViewModel.fetchCreateImages(origin: befoImage, faces: faceImage)
                         }
                     }
                 )
             }
+        }
+        .popup(isPresented: Binding(
+            get: { currentPopup?.isVisible ?? false},
+            set: { _ in currentPopup = nil }
+        )) {
+            if currentPopup?.isImage == true {
+             ToastBottomCustom (localizedKeyTitle: "noti_select_image")
+                    .padding(.horizontal, UIConstants.Padding.medium)
+            }
+        } customize: {
+            $0.type(.floater()).position(.bottom).autohideIn(2)
+        }
+        .onChange(of: enhanceViewModel.state.data) { _, newValue in
+            guard let origin = newValue?.first?.origin,
+                  let befoImage = befoImage else {
+            return
+            }
+            Task {
+            let currentDate = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let formatterDate = dateFormatter.string(from: currentDate)
+                
+                let imageUser = ImageUser.Builder()
+                    .setId(-1)
+                    .setPrompt(saveImageToDocuments(image: befoImage) ?? "")
+                    .setDate(formatterDate)
+                    .setStyleId(styleId)
+                    .setImageUrl(origin)
+                    .setSizeCanvas(selectedStyle)
+                    .setId(7)
+                    .build()
+                await userViewModel.addImage(imageUser)
+            }
+            let request = MultiSFace(original: "", images: [])
+            
+            enhanceViewModel.cleanState()
+        }
+    }
+    func loadImage(from url: URL) async -> UIImage? {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return UIImage(data: data)
+        } catch {
+            print("❌ Error loading image from URL: \(error)")
+            return nil
         }
     }
 }
