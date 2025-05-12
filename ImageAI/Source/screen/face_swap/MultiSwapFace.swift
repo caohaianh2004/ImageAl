@@ -125,7 +125,7 @@ struct MultiSwapFace: View {
                                 currentPopup = .image
                                 return
                             }
-
+                            
                             await enhanceViewModel.fetchCreateImages(origin: originImage, faces: faceImage)
                         }
                     }
