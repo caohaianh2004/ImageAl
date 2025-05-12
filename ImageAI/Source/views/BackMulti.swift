@@ -72,25 +72,25 @@ struct BackMulti: View {
                         }
                     }
                 }
-
+                
                 if !filteredFaces.isEmpty {
                     Text("Add Face")
                         .foregroundStyle(Color.white)
                         .font(.system(size: 17))
                         .padding(.top, 10)
                         .bold()
-
+                    
                     ScrollView(.horizontal) {
                         HStack(spacing: 0) {
                             ForEach(filteredFaces, id: \.id) { face in
                                 VStack(spacing: 8) {
                                     CircleMulti(beforeImage: nil, styleId: styleId)
                                         .padding()
-
+                                    
                                     Image(systemName: "arrow.down")
                                         .foregroundColor(.white)
                                         .padding(.vertical, 4)
-
+                                    
                                     KFImage(URL(string: face.imageName))
                                         .resizable()
                                         .frame(width: 70, height: 70)
@@ -103,6 +103,7 @@ struct BackMulti: View {
                 }
             }
         }
+        
         .onChange(of: selectionImage) { _, newImage in
             if let image = newImage {
                 befoImage = image
@@ -114,6 +115,49 @@ struct BackMulti: View {
                 }
             }
         }
+        
+        .onChange(of: imageUrl) { _, newUrl in
+            guard let url = newUrl else { return }
+
+            let filtered = dsFaceCrop.filter { $0.parentId == styleId }
+
+            if styleId > 0, !filtered.isEmpty {
+                filteredFaces = filtered
+                selectionImage = nil
+                Task {
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        if let uiImage = UIImage(data: data) {
+                            befoImage = uiImage
+                        }
+                    } catch {
+                        print("Lỗi khi tải ảnh từ URL: \(error.localizedDescription)")
+                    }
+                }
+                return
+            }
+
+            Task {
+                do {
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    if let uiImage = UIImage(data: data) {
+                        befoImage = uiImage
+                        selectionImage = nil
+
+                        await enhanceViewModel.fetchCreateImages(
+                            facecropCreateRequest: FaceCrop(images: []),
+                            uiImage: uiImage
+                        )
+                    } else {
+                        print("Không thể tạo UIImage từ data")
+                    }
+                } catch {
+                    print("Lỗi khi tải ảnh từ URL: \(error.localizedDescription)")
+                }
+            }
+        }
+
+        
         .onChange(of: enhanceViewModel.state.data) { _, newData in
             guard let origin = newData?.enumerated().map({ (i, item) in
                 StyleFaceCrop(id: i, imageName: item.origin, parentId: 0)
@@ -130,6 +174,7 @@ struct BackMulti: View {
         }
     }
 }
+
 
 func backButton() -> some View {
     ZStack {

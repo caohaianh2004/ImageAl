@@ -101,29 +101,32 @@ struct MultiSwapFace: View {
                 }
                 
                 FaceSwapButtonView(
-                    isShowButton: befoImage != nil && (imageUrl != nil || selectionImage != nil),
+                    isShowButton: befoImage != nil,
                     actionButton: {
-                        guard let befoImage = befoImage, (imageUrl != nil || selectionImage != nil) else {
+                        guard let originImage = befoImage else {
                             currentPopup = .image
                             return
                         }
+
                         Task {
-                            if let selectionImage = selectionImage {
-                                faceImage = [selectionImage]
-                            } else if let imageUrl = imageUrl {
-                                if let loadedImage = await loadImage(from: imageUrl) {
-                                    faceImage = [loadedImage]
-                                } else {
-                                    faceImage = []
-                                }
-                            } else {
-                                faceImage = []
+                            faceImage = []
+
+                            if let selection = selectionImage {
+                                faceImage.append(selection)
                             }
+
+                            if let url = imageUrl {
+                                if let loadedImage = await loadImage(from: url) {
+                                    faceImage.append(loadedImage)
+                                }
+                            }
+                            
                             guard !faceImage.isEmpty else {
-                                           currentPopup = .image
-                                           return
-                                       }
-                            await enhanceViewModel.fetchCreateImages(origin: befoImage, faces: faceImage)
+                                currentPopup = .image
+                                return
+                            }
+
+                            await enhanceViewModel.fetchCreateImages(origin: originImage, faces: faceImage)
                         }
                     }
                 )
@@ -165,17 +168,20 @@ struct MultiSwapFace: View {
             let request = MultiSFace(original: "", images: [])
             
             enhanceViewModel.cleanState()
+            router.navigateTo(.result_multiface(befoImage, nil, request, false, origin, false))
         }
     }
+    
     func loadImage(from url: URL) async -> UIImage? {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             return UIImage(data: data)
         } catch {
-            print("❌ Error loading image from URL: \(error)")
+            print("Lỗi load ảnh từ URL: \(error)")
             return nil
         }
     }
+
 }
 
 #Preview {

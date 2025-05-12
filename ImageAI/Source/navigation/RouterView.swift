@@ -47,6 +47,7 @@ class Router: ObservableObject {
         case result_restore(UIImage, UIImage?,RestoreCreateRequest, String, Bool)
         case result_headshot(UIImage, UIImage?,HeadShort, Bool, String, Bool)
         case result_swapface(UIImage, UIImage?,SwapFace, Bool, String, Bool)
+        case result_multiface(UIImage, UIImage?, MultiSFace, Bool, String, Bool)
         case setting
         case history
         case support
@@ -110,6 +111,16 @@ class Router: ObservableObject {
                urlString: urlString,
                isHistory: isHistory
             ).navigationBarBackButtonHidden()
+            
+        case . result_multiface(let beforeImage, let afterImage, let multifaceRequest, let isSamPle, let urlString, let isHistory) :
+              ResultMultiFace(
+                imageBefore: beforeImage,
+                imageAfter: afterImage,
+                isShowSample: isSamPle,
+                restoreMultiface: multifaceRequest,
+                urlString: urlString,
+                isHistory: isHistory
+              ).navigationBarBackButtonHidden()
             
         case .result_headshot(let beforeImage, let afterImage, let headshotRequest, let isSamPle, let urlString, let isHistory) :
             ResultGenerateHeadshot(
