@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Loading: View {
     @State private var isAnimating = false
+    
     var body: some View {
         ZStack {
             BackgroundView()

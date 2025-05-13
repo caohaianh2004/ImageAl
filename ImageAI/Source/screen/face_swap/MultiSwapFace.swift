@@ -1,9 +1,3 @@
-//
-//  FaceSwapMuti.swift
-//  ImageAI
-//
-//  Created by Boss on 23/04/2025.
-//
 
 import SwiftUI
 import Kingfisher
@@ -30,10 +24,10 @@ struct MultiSwapFace: View {
                 VStack {
                     BackMulti (
                         enhanceViewModel: enhanceViewModel,
+                        befoImage: $befoImage,
                         selectionImage: $selectionImage,
                         imageUrl: $imageUrl,
-                        styleId: $styleId,
-                        befoImage: $befoImage
+                        styleId: $styleId
                     )
                     
                     Text("abc_Avatar_style")
@@ -43,101 +37,18 @@ struct MultiSwapFace: View {
                         .bold()
                 }
                 
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(dsMultiface, id: \.id) { item in
-                            Button {
-                                befoImage = nil
-                                imageUrl = URL(string: item.imageName)
-                                styleId = item.id
-                            }label: {
-                                ZStack {
-                                    KFImage(URL(string: item.imageName))
-                                        .placeholder {
-                                            ShimmerEffect().cornerRadius(UIConstants.CornerRadius.large)
-                                        }
-                                        .loadDiskFileSynchronously()
-                                        .cacheMemoryOnly()
-                                        .resizable()
-                                        .frame(width: 105, height: 120)
-                                        .cornerRadius(UIConstants.CornerRadius.large)
-                                    
-                                    if styleId == item.id {
-                                        RoundedRectangle(cornerRadius: UIConstants.CornerRadius.large)
-                                            .strokeBorder(
-                                                LinearGradient(
-                                                    gradient: Gradient(colors: [
-                                                        .Color.colorBlueStart,
-                                                        .Color.colorControlSelected
-                                                    ]),
-                                                    startPoint: .leading,
-                                                    endPoint: .trailing
-                                                ),
-                                                lineWidth: 4
-                                            )
-                                            .frame(width: 105, height: 120)
-                                    }
-                                }
-                                .overlay (
-                                    VStack {
-                                        Spacer()
-                                        HStack {
-                                            Spacer()
-                                            Text(localizedKey: "abc_try")
-                                                .font(.system(size: UIConstants.Padding.medium, weight: .bold))
-                                                .foregroundColor(.white)
-                                                .frame(width: UIConstants.sizeTry,
-                                                       height: UIConstants.sizeTry)
-                                                .background(Circle()
-                                                    .fill(Color(.Color.colorTextSelected)))
-                                        }
-                                        .frame(maxWidth: .infinity)
-                                        .padding(UIConstants.Padding.paddingTry)
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
+                styleSelectionScrollView()
                 
-                FaceSwapButtonView(
-                    isShowButton: befoImage != nil,
-                    actionButton: {
-                        guard let originImage = befoImage else {
-                            currentPopup = .image
-                            return
-                        }
-
-                        Task {
-                            faceImage = []
-
-                            if let selection = selectionImage {
-                                faceImage.append(selection)
-                            }
-
-                            if let url = imageUrl {
-                                if let loadedImage = await loadImage(from: url) {
-                                    faceImage.append(loadedImage)
-                                }
-                            }
-                            
-                            guard !faceImage.isEmpty else {
-                                currentPopup = .image
-                                return
-                            }
-                            
-                            await enhanceViewModel.fetchCreateImages(origin: originImage, faces: faceImage)
-                        }
-                    }
-                )
+                buttonFaceSwap()
+                
             }
         }
-        .popup(isPresented: Binding(
+        .popup(isPresented: Binding (
             get: { currentPopup?.isVisible ?? false},
             set: { _ in currentPopup = nil }
         )) {
             if currentPopup?.isImage == true {
-             ToastBottomCustom (localizedKeyTitle: "noti_select_image")
+                ToastBottomCustom (localizedKeyTitle: "noti_select_image")
                     .padding(.horizontal, UIConstants.Padding.medium)
             }
         } customize: {
@@ -146,10 +57,10 @@ struct MultiSwapFace: View {
         .onChange(of: enhanceViewModel.state.data) { _, newValue in
             guard let origin = newValue?.first?.origin,
                   let befoImage = befoImage else {
-            return
+                return
             }
             Task {
-            let currentDate = Date()
+                let currentDate = Date()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let formatterDate = dateFormatter.string(from: currentDate)
@@ -165,11 +76,115 @@ struct MultiSwapFace: View {
                     .build()
                 await userViewModel.addImage(imageUser)
             }
+            
             let request = MultiSFace(original: "", images: [])
             
             enhanceViewModel.cleanState()
             router.navigateTo(.result_multiface(befoImage, nil, request, false, origin, false))
         }
+        
+    }
+    
+    @ViewBuilder
+    func styleSelectionScrollView() -> some View {
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(dsMultiface, id: \.id) { item in
+                    Button {
+                        befoImage = nil
+                        imageUrl = URL(string: item.imageName)
+                        styleId = item.id
+                    }label: {
+                        ZStack {
+                            KFImage(URL(string: item.imageName))
+                                .placeholder {
+                                    ShimmerEffect().cornerRadius(UIConstants.CornerRadius.large)
+                                }
+                                .loadDiskFileSynchronously()
+                                .cacheMemoryOnly()
+                                .resizable()
+                                .frame(width: 105, height: 120)
+                                .cornerRadius(UIConstants.CornerRadius.large)
+                            
+                            if styleId == item.id {
+                                RoundedRectangle(cornerRadius: UIConstants.CornerRadius.large)
+                                    .strokeBorder(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [
+                                                .Color.colorBlueStart,
+                                                .Color.colorControlSelected
+                                            ]),
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        ),
+                                        lineWidth: 4
+                                    )
+                                    .frame(width: 105, height: 120)
+                            }
+                        }
+                        .overlay (
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    Text(localizedKey: "abc_try")
+                                        .font(.system(size: UIConstants.Padding.medium, weight: .bold))
+                                        .foregroundColor(.white)
+                                        .frame(width: UIConstants.sizeTry,
+                                               height: UIConstants.sizeTry)
+                                        .background(Circle()
+                                            .fill(Color(.Color.colorTextSelected)))
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(UIConstants.Padding.paddingTry)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+    
+    func buttonFaceSwap() -> some View {
+        FaceSwapButtonView (
+            isShowButton: befoImage != nil && (imageUrl != nil || selectionImage != nil),
+            actionButton: {
+                guard let originImage = befoImage else {
+                    currentPopup = .image
+                    return
+                }
+                
+                guard selectionImage != nil && (befoImage != nil || imageUrl != nil ) else {
+                    currentPopup = .image
+                    return
+                }
+                
+                Task {
+                    faceImage = []
+                    
+                    if let selectionImage = selectionImage {
+                        faceImage.append(selectionImage)
+                    }
+                    
+                    if let imageUrl = imageUrl {
+                        if let loadedImage = await loadImage(from: imageUrl) {
+                            faceImage.append(loadedImage)
+                        } else {
+                            currentPopup = .image
+                            return
+                        }
+                    }
+                    
+                    if faceImage.isEmpty {
+                        currentPopup = .image
+                        return
+                    }
+                    
+                    await enhanceViewModel.fetchCreateImages(origin: originImage, faces: faceImage)
+                    
+                }
+            }
+        )
     }
     
     func loadImage(from url: URL) async -> UIImage? {
@@ -181,10 +196,10 @@ struct MultiSwapFace: View {
             return nil
         }
     }
-
+    
+    
 }
 
 #Preview {
     MultiSwapFace(enhanceViewModel: EnhanceRestoreViewModel(repository: AppDIContainer.shared.appRepository))
 }
-

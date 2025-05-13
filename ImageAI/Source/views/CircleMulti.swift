@@ -11,6 +11,7 @@ struct CircleMulti: View {
     @State var beforeImage: UIImage?
     @State var styleId: Int = 0
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select",doneButtonColor: .orange)
+    @State private var listImage: [UIImage] = []
     
     var body: some View {
         ZStack {
@@ -32,42 +33,45 @@ struct CircleMulti: View {
                         buttonCricle()
                     }
                 }
-                .overlay {
-                    if beforeImage != nil {
-                        ZStack{
-                            if let newImage = beforeImage {
-                                Image(uiImage: newImage)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100)
-                                    .clipShape(Circle())
-                            }
-                        }
-                        
-                        VStack {
-                            HStack {
-                                Spacer()
-                                Button {
-                                    beforeImage = nil
-                                    styleId = 0
-                                } label: {
-                                    Image("ic_close")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .foregroundStyle(Color.white)
-                                        .frame(width: 10, height: 10)
-                                        .bold()
-                                        .padding(UIConstants.Padding.large)
-                                }
-                                .frame(width: UIConstants.actionBarSize, height: UIConstants.actionBarSize)
-                                .padding()
-                                .offset(x: 8, y: -15)
-                            }
-                            Spacer()
-                        }
+                .onChange(of: beforeImage) { _, newValue in
+                    if let image = newValue {
+                        listImage.append(image)
+                        beforeImage = nil
                     }
                 }
+                
+                if !listImage.isEmpty {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(Array(listImage.enumerated()), id: \.offset) { index, image in
+                                ZStack(alignment: .trailing) {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 80, height: 80)
+                                        .clipShape(Circle())
+                                    
+                                    Button {
+                                        listImage.remove(at: index)
+                                    } label: {
+                                        Image("ic_close")
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .foregroundStyle(Color.white)
+                                            .frame(width: 10, height: 10)
+                                            .bold()
+                                            .padding(UIConstants.Padding.large)
+                                    }
+                                    .offset(x: 1, y: -15)
+                                }
+                            }
+                        }
+
+                    }
+                }
+                Spacer()
             }
+            .padding()
         }
     }
     
@@ -85,6 +89,6 @@ struct CircleMulti: View {
     }
 }
 
-//#Preview {
-//    CircleMulti()
-//}
+#Preview {
+    CircleMulti()
+}
