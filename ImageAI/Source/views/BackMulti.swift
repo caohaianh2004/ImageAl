@@ -83,11 +83,11 @@ struct BackMulti: View {
                             ForEach(filteredFaces, id: \.id) { face in
                                 VStack(spacing: 8) {
                                     CircleMulti(beforeImage: nil, styleId: styleId)
-                                        .padding()
+                                        .padding(12)
                                     
                                     Image(systemName: "arrow.down")
                                         .foregroundColor(.white)
-                                        .padding(.vertical, 4)
+                                        .padding(.top, -30)
                                     
                                     KFImage(URL(string: face.imageName))
                                         .resizable()
@@ -113,42 +113,45 @@ struct BackMulti: View {
         }
         
         .onChange(of: imageUrl) { _, newUrl in
-            if let url = newUrl {
-                let filtered = dsFaceCrop.filter { $0.parentId == styleId }
-                if !filtered.isEmpty {
-                    filteredFaces = filtered
-                    selectionImage = nil
-                    
-                    Task {
-                        do {
-                            let (data, _) = try await URLSession.shared.data(from: url)
-                            if let uiImage = UIImage(data: data) {
-                                befoImage = uiImage
-                            }
-                        } catch {
-                            print("Lỗi khi tải ảnh từ URL: \(error.localizedDescription)")
-                        }
-                    }
-                    return
-                }
-                
+            guard let url = newUrl else { return }
+
+            let filtered = dsFaceCrop.filter { $0.parentId == styleId }
+
+            if styleId > 0, !filtered.isEmpty {
+                filteredFaces = filtered
+                selectionImage = nil
+
                 Task {
                     do {
                         let (data, _) = try await URLSession.shared.data(from: url)
                         if let uiImage = UIImage(data: data) {
                             befoImage = uiImage
-                            selectionImage = nil
-                            
-                            await enhanceViewModel.fetchCreateImages(
-                                facecropCreateRequest: FaceCrop(images: []),
-                                uiImage: uiImage
-                            )
                         } else {
                             print("Không thể tạo UIImage từ data")
                         }
                     } catch {
                         print("Lỗi khi tải ảnh từ URL: \(error.localizedDescription)")
                     }
+                }
+                return
+            }
+
+            Task {
+                do {
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    if let uiImage = UIImage(data: data) {
+                        befoImage = uiImage
+                        selectionImage = nil
+
+                        await enhanceViewModel.fetchCreateImages(
+                            facecropCreateRequest: FaceCrop(images: []),
+                            uiImage: uiImage
+                        )
+                    } else {
+                        print("Không thể tạo UIImage từ data")
+                    }
+                } catch {
+                    print("Lỗi khi tải ảnh từ URL: \(error.localizedDescription)")
                 }
             }
         }

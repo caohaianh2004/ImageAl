@@ -154,10 +154,11 @@ struct MultiSwapFace: View {
                     return
                 }
                 
-                guard selectionImage != nil && (befoImage != nil || imageUrl != nil ) else {
+                guard befoImage != nil && (selectionImage != nil || imageUrl != nil) else {
                     currentPopup = .image
                     return
                 }
+                
                 
                 Task {
                     faceImage = []
