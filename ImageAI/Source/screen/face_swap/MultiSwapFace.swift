@@ -15,7 +15,6 @@ struct MultiSwapFace: View {
     @State private var styleId: Int = 0
     @State private var faceImage: [UIImage] = []
     @State private var isselectedPhotto = false
-    @State private var selectedStyle = ""
     
     var body: some View {
         ZStack {
@@ -71,7 +70,6 @@ struct MultiSwapFace: View {
                     .setDate(formatterDate)
                     .setStyleId(styleId)
                     .setImageUrl(origin)
-                    .setSizeCanvas(selectedStyle)
                     .setId(7)
                     .build()
                 await userViewModel.addImage(imageUser)
@@ -94,7 +92,7 @@ struct MultiSwapFace: View {
                         befoImage = nil
                         imageUrl = URL(string: item.imageName)
                         styleId = item.id
-                    }label: {
+                    } label: {
                         ZStack {
                             KFImage(URL(string: item.imageName))
                                 .placeholder {
@@ -149,40 +147,27 @@ struct MultiSwapFace: View {
         FaceSwapButtonView (
             isShowButton: befoImage != nil && (imageUrl != nil || selectionImage != nil),
             actionButton: {
-                guard let originImage = befoImage else {
+                guard let befoImage = befoImage, (selectionImage != nil || imageUrl != nil) else {
                     currentPopup = .image
                     return
                 }
-                
-                guard befoImage != nil && (selectionImage != nil || imageUrl != nil) else {
-                    currentPopup = .image
-                    return
-                }
-                
                 
                 Task {
-                    faceImage = []
+                    let faceImage: UIImage?
                     
                     if let selectionImage = selectionImage {
-                        faceImage.append(selectionImage)
+                        faceImage = selectionImage
+                    } else if let imageUrl = imageUrl {
+                        faceImage = await loadImage(from: imageUrl)
+                        
+                    } else {
+                        faceImage = nil
                     }
-                    
-                    if let imageUrl = imageUrl {
-                        if let loadedImage = await loadImage(from: imageUrl) {
-                            faceImage.append(loadedImage)
-                        } else {
-                            currentPopup = .image
-                            return
-                        }
-                    }
-                    
-                    if faceImage.isEmpty {
+                    guard let faceImage else {
                         currentPopup = .image
                         return
                     }
-                    
-                    await enhanceViewModel.fetchCreateImages(origin: originImage, faces: faceImage)
-                    
+                    await enhanceViewModel.fetchCreateImages(origin: befoImage, faces: [faceImage])
                 }
             }
         )

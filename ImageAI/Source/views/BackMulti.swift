@@ -155,7 +155,6 @@ struct BackMulti: View {
                 }
             }
         }
-        
         .onChange(of: enhanceViewModel.state.data) { _, newData in
             guard let origin = newData?.enumerated().map({ (i, item) in
                 StyleFaceCrop(id: i, imageName: item.origin, parentId: 0)
@@ -164,7 +163,6 @@ struct BackMulti: View {
             }
             filteredFaces = origin
         }
-        
         .onChange(of: styleId) { _, newId in
             if selectionImage == nil {
                 filteredFaces = dsFaceCrop.filter { $0.parentId == newId }

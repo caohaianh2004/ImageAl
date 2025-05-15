@@ -24,7 +24,8 @@ public class EnhanceRestoreViewModel: ObservableObject {
         state = EaseViewState(isLoading: true)
         
         let originBase64Str = await Base64Image.base64EncodeImage(origin)
-
+        Logger.success("\(faces.count)")
+        
         var faceBase64List: [String] = []
         for face in faces {
             let base64 = await Base64Image.base64EncodeImage(face)
@@ -32,7 +33,7 @@ public class EnhanceRestoreViewModel: ObservableObject {
         }
 
         let newRequest = MultiSFace(original: originBase64Str, images: faceBase64List)
-        Logger.success("\(newRequest)")
+//      Logger.success("\(newRequest)")
         let result = await repository.createMuliFace(multifaceRequest: newRequest)
 
         switch result {
