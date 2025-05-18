@@ -16,6 +16,7 @@ struct MultiSwapFace: View {
     @State private var faceImage: [UIImage] = []
     @State private var isselectedPhotto = false
     
+    
     var body: some View {
         ZStack {
             BackgroundView()
@@ -80,7 +81,6 @@ struct MultiSwapFace: View {
             enhanceViewModel.cleanState()
             router.navigateTo(.result_multiface(befoImage, nil, request, false, origin, false))
         }
-        
     }
     
     @ViewBuilder
@@ -92,7 +92,7 @@ struct MultiSwapFace: View {
                         befoImage = nil
                         imageUrl = URL(string: item.imageName)
                         styleId = item.id
-                    } label: {
+                    }label: {
                         ZStack {
                             KFImage(URL(string: item.imageName))
                                 .placeholder {
@@ -147,27 +147,29 @@ struct MultiSwapFace: View {
         FaceSwapButtonView (
             isShowButton: befoImage != nil && (imageUrl != nil || selectionImage != nil),
             actionButton: {
-                guard let befoImage = befoImage, (selectionImage != nil || imageUrl != nil) else {
+                guard let befoImage = befoImage else {
                     currentPopup = .image
                     return
                 }
                 
                 Task {
-                    let faceImage: UIImage?
+                    var faceImage: UIImage?
                     
                     if let selectionImage = selectionImage {
+                        print("Dùng ảnh selectionImage: \(selectionImage)")
                         faceImage = selectionImage
-                    } else if let imageUrl = imageUrl {
-                        faceImage = await loadImage(from: imageUrl)
                         
-                    } else {
-                        faceImage = nil
+                    } else if let imageUrl = imageUrl {
+                        print("Dùng ảnh imageUrl: \(imageUrl)")
+                        faceImage = await loadImage(from: imageUrl)
                     }
                     guard let faceImage else {
                         currentPopup = .image
                         return
                     }
-                    await enhanceViewModel.fetchCreateImages(origin: befoImage, faces: [faceImage])
+                    
+                    await enhanceViewModel.fetchCreateImages(origin: befoImage, swapFaces: [faceImage])
+                    
                 }
             }
         )
@@ -189,3 +191,4 @@ struct MultiSwapFace: View {
 #Preview {
     MultiSwapFace(enhanceViewModel: EnhanceRestoreViewModel(repository: AppDIContainer.shared.appRepository))
 }
+

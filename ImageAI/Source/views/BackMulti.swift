@@ -7,12 +7,15 @@ struct BackMulti: View {
     @Binding var selectionImage: UIImage?
     @Binding var imageUrl: URL?
     @Binding var styleId: Int
+
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select", doneButtonColor: .orange)
     @State private var filteredFaces = [StyleFaceCrop]()
+    @State private var faceImages: [UIImage?] = []
 
     var body: some View {
         ZStack {
             BackgroundView()
+
             VStack {
                 CroppedPhotosPicker(style: .default, options: croppingOptions, selection: $selectionImage) { rect in
                     Logger.success("Did crop to rect: \(rect)")
@@ -21,86 +24,18 @@ struct BackMulti: View {
                 } didCancel: {
                     Logger.success("Did cancel")
                 } label: {
-                    ZStack {
-                        if let newImage = selectionImage {
-                            Image(uiImage: newImage)
-                                .resizable()
-                                .frame(width: 300, height: 300)
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(UIConstants.CornerRadius.extraLarge)
-                                .clipped()
-                        } else if let imageUrl = imageUrl {
-                            KFImage(imageUrl)
-                                .resizable()
-                                .frame(width: 300, height: 300)
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(UIConstants.CornerRadius.extraLarge)
-                                .clipped()
-                        } else {
-                            backButton()
-                        }
-                    }
-                    .overlay {
-                        if selectionImage != nil || imageUrl != nil {
-                            ZStack {
-                                VStack {
-                                    HStack {
-                                        Spacer()
-                                        Button {
-                                            selectionImage = nil
-                                            imageUrl = nil
-                                            styleId = 0
-                                            filteredFaces = []
-                                        } label: {
-                                            Image("ic_close")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundStyle(Color.white)
-                                                .frame(width: UIConstants.sizeIconSmall, height: UIConstants.sizeIconSmall)
-                                                .padding(UIConstants.Padding.large)
-                                                .background(RoundedRectangle(cornerRadius: UIConstants.CornerRadius.extraLarge)
-                                                    .fill(Color.gray.opacity(0.3)))
-                                        }
-                                        .padding(UIConstants.Padding.superSmall)
-                                        .frame(width: UIConstants.actionBarSize, height: UIConstants.actionBarSize)
-                                    }
-                                    Spacer()
-                                }
-                            }
-                        }
-                    }
+                    selectionLabelView()
                 }
-                
+
                 if !filteredFaces.isEmpty {
-                    Text("Add Face")
-                        .foregroundStyle(Color.white)
-                        .font(.system(size: 17))
-                        .padding(.top, 10)
-                        .bold()
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 0) {
-                            ForEach(filteredFaces, id: \.id) { face in
-                                VStack(spacing: 8) {
-                                    CircleMulti(beforeImage: nil, styleId: styleId)
-                                        .padding(12)
-                                    
-                                    Image(systemName: "arrow.down")
-                                        .foregroundColor(.white)
-                                        .padding(.top, -30)
-                                    
-                                    KFImage(URL(string: face.imageName))
-                                        .resizable()
-                                        .frame(width: 70, height: 70)
-                                        .clipShape(Circle())
-                                }
-                                .padding(.horizontal, 4)
-                            }
-                        }
-                    }
+                    filteredFaceListView()
                 }
+
+                Spacer()
             }
-        }.onChange(of: selectionImage) { _, newImage in
+            .padding()
+        }
+        .onChange(of: selectionImage) { _, newImage in
             if let image = newImage {
                 befoImage = image
                 Task {
@@ -111,7 +46,6 @@ struct BackMulti: View {
                 }
             }
         }
-        
         .onChange(of: imageUrl) { _, newUrl in
             guard let url = newUrl else { return }
 
@@ -162,11 +96,124 @@ struct BackMulti: View {
                 return
             }
             filteredFaces = origin
+            // Reset faceImages array size to match filteredFaces count
+            faceImages = Array(repeating: nil, count: filteredFaces.count)
         }
         .onChange(of: styleId) { _, newId in
             if selectionImage == nil {
                 filteredFaces = dsFaceCrop.filter { $0.parentId == newId }
+                faceImages = Array(repeating: nil, count: filteredFaces.count)
             }
+        }
+    }
+
+    // MARK: - Views
+
+    @ViewBuilder
+    func selectionLabelView() -> some View {
+        ZStack {
+            selectionImageContent()
+        }
+        .overlay(alignment: .topTrailing) {
+            if selectionImage != nil || imageUrl != nil {
+                closeButtonOverlay()
+            }
+        }
+    }
+
+    @ViewBuilder
+    func selectionImageContent() -> some View {
+        if let newImage = selectionImage {
+            Image(uiImage: newImage)
+                .resizable()
+                .frame(width: 300, height: 300)
+                .aspectRatio(contentMode: .fit)
+                .cornerRadius(UIConstants.CornerRadius.extraLarge)
+                .clipped()
+        } else if let imageUrl = imageUrl {
+            KFImage(imageUrl)
+                .resizable()
+                .frame(width: 300, height: 300)
+                .aspectRatio(contentMode: .fit)
+                .cornerRadius(UIConstants.CornerRadius.extraLarge)
+                .clipped()
+        } else {
+            backButton()
+        }
+    }
+
+    @ViewBuilder
+    func closeButtonOverlay() -> some View {
+        VStack {
+            HStack {
+                Spacer()
+                Button {
+                    selectionImage = nil
+                    imageUrl = nil
+                    styleId = 0
+                    filteredFaces = []
+                    faceImages = []
+                } label: {
+                    Image("ic_close")
+                        .resizable()
+                        .renderingMode(.template)
+                        .foregroundStyle(Color.white)
+                        .frame(width: UIConstants.sizeIconSmall, height: UIConstants.sizeIconSmall)
+                        .padding(UIConstants.Padding.large)
+                        .background(
+                            RoundedRectangle(cornerRadius: UIConstants.CornerRadius.extraLarge)
+                                .fill(Color.gray.opacity(0.3))
+                        )
+                }
+                .padding(UIConstants.Padding.superSmall)
+                .frame(width: UIConstants.actionBarSize, height: UIConstants.actionBarSize)
+            }
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    func filteredFaceListView() -> some View {
+        VStack {
+            Text("Add Face")
+                .foregroundStyle(Color.white)
+                .font(.system(size: 17))
+                .padding(.top, 10)
+                .bold()
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(filteredFaces.indices, id: \.self) { index in
+                        let face = filteredFaces[index]
+                        faceView(for: face, index: index)
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    func faceView(for face: StyleFaceCrop, index: Int) -> some View {
+        VStack(spacing: 8) {
+            CircleMulti(beforeImage: Binding(
+                get: { faceImages.indices.contains(index) ? faceImages[index] : nil },
+                set: { newValue in
+                    if faceImages.indices.contains(index) {
+                        faceImages[index] = newValue
+                    }
+                }),
+                        styleId: styleId)
+                .frame(width: 80, height: 80)
+                .padding(12)
+
+            Image(systemName: "arrow.down")
+                .foregroundColor(.white)
+                .padding(.top, -30)
+
+            KFImage(URL(string: face.imageName))
+                .resizable()
+                .frame(width: 70, height: 70)
+                .clipShape(Circle())
         }
     }
 }
@@ -193,4 +240,3 @@ func backButton() -> some View {
             .cornerRadius(UIConstants.CornerRadius.extraLarge)
     }
 }
-

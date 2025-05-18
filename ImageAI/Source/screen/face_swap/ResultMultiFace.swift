@@ -182,7 +182,7 @@ struct ResultMultiFace: View {
                             Button {
                                 Task {
                                     guard let imageBefore = imageBefore else { return }
-                                    await enhanceViewModel.fetchCreateImages(origin: imageBefore, faces: [imageBefore])
+                                    await enhanceViewModel.fetchCreateImages(origin: imageBefore, swapFaces: [imageBefore])
                                     
                                     
                                 }
@@ -250,7 +250,7 @@ struct ResultMultiFace: View {
                                 Button {
                                     Task {
                                         guard let imageAfter = imageAfter else {return}
-                                        await enhanceViewModel.fetchCreateImages(origin: imageAfter, faces: [imageAfter])
+                                        await enhanceViewModel.fetchCreateImages(origin: imageAfter, swapFaces: [imageAfter])
                                     }
                                 } label: {
                                     VStack(alignment: .leading) {
@@ -383,7 +383,7 @@ struct ResultMultiFace: View {
                         guard let imageAfter = imageAfter else {
                             return
                         }
-                        await enhanceViewModel.fetchCreateImages(origin: imageAfter, faces: [imageAfter])
+                        await enhanceViewModel.fetchCreateImages(origin: imageAfter, swapFaces: [imageAfter])
                     }
                 } label: {
                     HStack {
@@ -402,7 +402,7 @@ struct ResultMultiFace: View {
                         guard let imageBefore = imageBefore else {
                             return
                         }
-                        await enhanceViewModel.fetchCreateImages(origin: imageBefore, faces: [imageBefore])
+                        await enhanceViewModel.fetchCreateImages(origin: imageBefore, swapFaces: [imageBefore])
                     }
                 } label: {
                     HStack {
