@@ -33,6 +33,7 @@ public class EnhanceRestoreViewModel: ObservableObject {
         }
 
         let newRequest = MultiSFace(original: originBase64Str, images: swapBase64List)
+//        Logger.success("\(newRequest)")
         let result = await repository.createMuliFace(multifaceRequest: newRequest)
 
         switch result {
@@ -43,8 +44,6 @@ public class EnhanceRestoreViewModel: ObservableObject {
             self.state = EaseViewState(error: error.localizedDescription)
         }
     }
-
-
 
     func fetchCreateImages(originalImage: UIImage, faceImage: UIImage) async {
         state = EaseViewState(isLoading: true)

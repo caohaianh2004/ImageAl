@@ -10,7 +10,7 @@ struct BackMulti: View {
 
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select", doneButtonColor: .orange)
     @State private var filteredFaces = [StyleFaceCrop]()
-    @State private var faceImages: [UIImage?] = []
+    @Binding var faceImages: [UIImage?] 
 
     var body: some View {
         ZStack {
@@ -60,6 +60,7 @@ struct BackMulti: View {
                         let (data, _) = try await URLSession.shared.data(from: url)
                         if let uiImage = UIImage(data: data) {
                             befoImage = uiImage
+                            
                         } else {
                             print("Không thể tạo UIImage từ data")
                         }
@@ -96,7 +97,6 @@ struct BackMulti: View {
                 return
             }
             filteredFaces = origin
-            // Reset faceImages array size to match filteredFaces count
             faceImages = Array(repeating: nil, count: filteredFaces.count)
         }
         .onChange(of: styleId) { _, newId in
@@ -107,7 +107,6 @@ struct BackMulti: View {
         }
     }
 
-    // MARK: - Views
 
     @ViewBuilder
     func selectionLabelView() -> some View {
@@ -195,20 +194,26 @@ struct BackMulti: View {
     @ViewBuilder
     func faceView(for face: StyleFaceCrop, index: Int) -> some View {
         VStack(spacing: 8) {
-            CircleMulti(beforeImage: Binding(
-                get: { faceImages.indices.contains(index) ? faceImages[index] : nil },
-                set: { newValue in
-                    if faceImages.indices.contains(index) {
-                        faceImages[index] = newValue
+            CircleMulti (
+                    beforeImage: Binding(
+                        get: { faceImages.indices.contains(index) ? faceImages[index] : nil },
+                        set: { newValue in
+                            if faceImages.indices.contains(index) {
+                                faceImages[index] = newValue
+                            }
+                        }
+                    ),
+                    onImageChanged: { newImage in
+                        if faceImages.indices.contains(index) {
+                            faceImages[index] = newImage
+                        }
                     }
-                }),
-                        styleId: styleId)
+                )
                 .frame(width: 80, height: 80)
                 .padding(12)
 
             Image(systemName: "arrow.down")
                 .foregroundColor(.white)
-                .padding(.top, -30)
 
             KFImage(URL(string: face.imageName))
                 .resizable()

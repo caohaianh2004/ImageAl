@@ -165,7 +165,8 @@ struct Swapface: View {
                     
                     if let selectionImage = selectionImage {
                         faceImage = selectionImage
-                    } else if let imageUrl = imageUrl {
+                    } 
+                    else if let imageUrl = imageUrl {
                         faceImage = await loadImage(from: imageUrl)
                     } else {
                         faceImage = nil

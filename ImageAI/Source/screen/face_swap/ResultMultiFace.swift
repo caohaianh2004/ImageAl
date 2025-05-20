@@ -95,7 +95,7 @@ struct ResultMultiFace: View {
             }
         }
     }
-    
+ 
     @ViewBuilder
     func SubResultView() -> some View {
         VStack (spacing: UIConstants.Padding.small) {
@@ -122,12 +122,12 @@ struct ResultMultiFace: View {
                         .bold()
                         .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
                         .foregroundStyle(Color.white)
-                    
-                    Text("\(imageAfter.size.width.description) x \(imageAfter.size.height.description)")
-                        .bold()
-                        .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
-                        .foregroundColor(Color(.Color.colorTextSelected))
-                    
+//                    
+////                    Text("\(imageAfter.size.width.description) x \(imageAfter.size.height.description)")
+////                        .bold()
+////                        .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
+////                        .foregroundColor(Color(.Color.colorTextSelected))
+//                    
                     Spacer()
                 }
                 .padding(.horizontal, UIConstants.Padding.medium)
@@ -183,8 +183,6 @@ struct ResultMultiFace: View {
                                 Task {
                                     guard let imageBefore = imageBefore else { return }
                                     await enhanceViewModel.fetchCreateImages(origin: imageBefore, swapFaces: [imageBefore])
-                                    
-                                    
                                 }
                             } label: {
                                 VStack {

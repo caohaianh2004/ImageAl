@@ -167,7 +167,6 @@ struct HistoryScreen: View {
                                             }
                                             
                                         }
-                                        
                                     }
                                     
                                     .background(Color(.Color.colorAccent))

@@ -13,9 +13,7 @@ struct MultiSwapFace: View {
     @State private var imageUrl: URL? = nil
     @State private var selectionImage: UIImage? = nil
     @State private var styleId: Int = 0
-    @State private var faceImage: [UIImage] = []
-    @State private var isselectedPhotto = false
-    
+    @State private var faceImages: [UIImage?] = []
     
     var body: some View {
         ZStack {
@@ -27,7 +25,8 @@ struct MultiSwapFace: View {
                         befoImage: $befoImage,
                         selectionImage: $selectionImage,
                         imageUrl: $imageUrl,
-                        styleId: $styleId
+                        styleId: $styleId,
+                        faceImages: $faceImages
                     )
                     
                     Text("abc_Avatar_style")
@@ -63,12 +62,12 @@ struct MultiSwapFace: View {
                 let currentDate = Date()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                let formatterDate = dateFormatter.string(from: currentDate)
+                let formattedDate = dateFormatter.string(from: currentDate)
                 
                 let imageUser = ImageUser.Builder()
                     .setId(-1)
                     .setPrompt(saveImageToDocuments(image: befoImage) ?? "")
-                    .setDate(formatterDate)
+                    .setDate(formattedDate)
                     .setStyleId(styleId)
                     .setImageUrl(origin)
                     .setId(7)
@@ -145,36 +144,36 @@ struct MultiSwapFace: View {
     
     func buttonFaceSwap() -> some View {
         FaceSwapButtonView (
-            isShowButton: befoImage != nil && (imageUrl != nil || selectionImage != nil),
+            isShowButton: befoImage != nil && (!faceImages.isEmpty || selectionImage != nil || imageUrl != nil),
             actionButton: {
                 guard let befoImage = befoImage else {
                     currentPopup = .image
                     return
                 }
-                
+
                 Task {
-                    var faceImage: UIImage?
-                    
-                    if let selectionImage = selectionImage {
-                        print("Dùng ảnh selectionImage: \(selectionImage)")
-                        faceImage = selectionImage
-                        
-                    } else if let imageUrl = imageUrl {
-                        print("Dùng ảnh imageUrl: \(imageUrl)")
-                        faceImage = await loadImage(from: imageUrl)
+                    var swapFaces: [UIImage] = []
+
+                    if !faceImages.isEmpty {
+                        swapFaces = faceImages.compactMap { $0 }
+                    } else if let selectionImage = selectionImage {
+                        swapFaces = [selectionImage]
+                    } else if let imageUrl = imageUrl, let loaded = await loadImage(from: imageUrl) {
+                        swapFaces = [loaded]
                     }
-                    guard let faceImage else {
+
+                    guard !swapFaces.isEmpty else {
                         currentPopup = .image
                         return
                     }
-                    
-                    await enhanceViewModel.fetchCreateImages(origin: befoImage, swapFaces: [faceImage])
+
+                    await enhanceViewModel.fetchCreateImages(origin: befoImage, swapFaces: swapFaces)
                     
                 }
             }
         )
     }
-    
+
     func loadImage(from url: URL) async -> UIImage? {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
@@ -185,10 +184,8 @@ struct MultiSwapFace: View {
         }
     }
     
-    
 }
 
 #Preview {
     MultiSwapFace(enhanceViewModel: EnhanceRestoreViewModel(repository: AppDIContainer.shared.appRepository))
 }
-
