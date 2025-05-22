@@ -156,9 +156,10 @@ struct MultiSwapFace: View {
 
                     if !faceImages.isEmpty {
                         swapFaces = faceImages.compactMap { $0 }
-                    } else if let selectionImage = selectionImage {
+                    } else if let selectionImage = selectionImage  {
                         swapFaces = [selectionImage]
-                    } else if let imageUrl = imageUrl, let loaded = await loadImage(from: imageUrl) {
+                    }
+                    else if let imageUrl = imageUrl, let loaded = await loadImage(from: imageUrl) {
                         swapFaces = [loaded]
                     }
 

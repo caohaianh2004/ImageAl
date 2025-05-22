@@ -2,7 +2,7 @@
 //  Loading.swift
 //  ImageAI
 //
-//  Created by Boss on 12/05/2025.
+//  Created by Boss on 21/05/2025.
 //
 
 import SwiftUI
@@ -23,9 +23,11 @@ struct Loading: View {
                     .onAppear {
                         isAnimating = true
                     }
-                Text("Đang xử lý ảnh...")
+                    .padding()
+                Text("ĐANG XỬ LÝ ẢNH...")
                     .foregroundColor(.white)
                     .bold()
+                    .font(.system(size: 12))
             }
             .padding(32)
             .background(Color.blue.opacity(0.75))

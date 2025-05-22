@@ -34,6 +34,6 @@ struct ManageSwapFace: View {
     }
 }
 
-//#Preview {
-//    ManageSwapFace()
-//}
+#Preview {
+    ManageSwapFace(enhanceViewModel: EnhanceRestoreViewModel(repository: AppDIContainer.shared.appRepository))
+}

@@ -122,12 +122,12 @@ struct ResultMultiFace: View {
                         .bold()
                         .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
                         .foregroundStyle(Color.white)
-//                    
-////                    Text("\(imageAfter.size.width.description) x \(imageAfter.size.height.description)")
-////                        .bold()
-////                        .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
-////                        .foregroundColor(Color(.Color.colorTextSelected))
-//                    
+                    
+                    Text("\(imageAfter.size.width.description) x \(imageAfter.size.height.description)")
+                        .bold()
+                        .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
+                        .foregroundColor(Color(.Color.colorTextSelected))
+                    
                     Spacer()
                 }
                 .padding(.horizontal, UIConstants.Padding.medium)
@@ -153,6 +153,12 @@ struct ResultMultiFace: View {
                             .font(.system(size: UIConstants.TextSize.body, weight: .bold))
                             .fontWeight(.medium)
                             .foregroundColor(.Color.colorPrimary)
+                        
+                        Text(": \(router.currentDate)")
+                            .font(.system(size: UIConstants.TextSize.body, weight: .bold))
+                            .fontWeight(.bold)
+                            .foregroundColor(.Color.colorPrimary)
+                        
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -204,7 +210,7 @@ struct ResultMultiFace: View {
                         
                         Button {
                             
-                        }label: {
+                        } label: {
                             VStack(alignment: .trailing) {
                                 Image(systemName: "square.and.arrow.up")
                                     .renderingMode(.template)

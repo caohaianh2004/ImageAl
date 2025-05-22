@@ -72,7 +72,7 @@ struct HistoryScreen: View {
                                         if let beforeImage = loadImageFromDocuments(path: user.prompt) {
                                             router.navigateTo(.result_headshot(beforeImage, nil, request, false, user.imageUrl, true))
                                         }
-                                    } else  {
+                                    } else if user.type == 6  {
                                         let request = SwapFace(
                                             originals: [],
                                             faces: []
@@ -80,6 +80,15 @@ struct HistoryScreen: View {
                                         router.currentDate = user.date
                                         if let beforeImage = loadImageFromDocuments(path: user.prompt) {
                                             router.navigateTo(.result_swapface(beforeImage, nil, request, false, user.imageUrl, true))
+                                        }
+                                    } else {
+                                        let request = MultiSFace(
+                                            original: "",
+                                            images: []
+                                        )
+                                        router.currentDate = user.date
+                                        if let beforeImage = loadImageFromDocuments(path: user.prompt) {
+                                            router.navigateTo(.result_multiface(beforeImage, nil, request, false, user.imageUrl, true))
                                         }
                                     }
                                     

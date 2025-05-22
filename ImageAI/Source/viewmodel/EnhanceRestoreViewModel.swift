@@ -66,7 +66,8 @@ public class EnhanceRestoreViewModel: ObservableObject {
     }
     
     func fetchCreateImages(facecropCreateRequest: FaceCrop, uiImage: UIImage) async {
-        state = EaseViewState(isLoading: true)
+//        state = EaseViewState(isLoading: false)
+    
         let base64Str = await Base64Image.base64EncodeImage(uiImage)
         
         let newRequest = FaceCrop(images: [base64Str])

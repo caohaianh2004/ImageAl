@@ -11,6 +11,7 @@ struct BackMulti: View {
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select", doneButtonColor: .orange)
     @State private var filteredFaces = [StyleFaceCrop]()
     @Binding var faceImages: [UIImage?] 
+    @State private var isLoading = false
 
     var body: some View {
         ZStack {
@@ -38,11 +39,13 @@ struct BackMulti: View {
         .onChange(of: selectionImage) { _, newImage in
             if let image = newImage {
                 befoImage = image
+                isLoading = true
                 Task {
                     await enhanceViewModel.fetchCreateImages(
                         facecropCreateRequest: FaceCrop(images: []),
                         uiImage: image
                     )
+                    isLoading = false
                 }
             }
         }
@@ -72,6 +75,9 @@ struct BackMulti: View {
             }
 
             Task {
+                isLoading = true
+                defer { isLoading = false }
+                
                 do {
                     let (data, _) = try await URLSession.shared.data(from: url)
                     if let uiImage = UIImage(data: data) {
@@ -112,6 +118,13 @@ struct BackMulti: View {
     func selectionLabelView() -> some View {
         ZStack {
             selectionImageContent()
+            
+            if isLoading {
+                Loading()
+                    .frame(width: 100, height: 100)
+                    .background(Color.black.opacity(0.4))
+                    .cornerRadius(12)
+            }
         }
         .overlay(alignment: .topTrailing) {
             if selectionImage != nil || imageUrl != nil {

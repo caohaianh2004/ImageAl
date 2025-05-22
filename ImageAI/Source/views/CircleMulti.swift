@@ -60,9 +60,9 @@ struct CircleMulti: View {
     }
 
     private func addImage(_ image: UIImage) {
-        //if !listImage.contains(where: { $0.pngData() == image.pngData() }) {
+//        if !listImage.contains(where: { $0.pngData() == image.pngData() }) {
             listImage.append(image)
-        //}
+//        }
 //        print("\(listImage.count)")
         onImageChanged(image)
     }

@@ -116,10 +116,10 @@ struct ResultSwapFace: View {
                         .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
                         .foregroundStyle(Color.white)
                     
-//                    Text("\(imageAfter.size.width.description) x \(imageAfter.size.height.description)")
-//                        .bold()
-//                        .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
-//                        .foregroundStyle(Color(.Color.colorTextSelected))
+                    Text("\(imageAfter.size.width.description) x \(imageAfter.size.height.description)")
+                        .bold()
+                        .font(.system(size: UIConstants.TextSize.largeBody, weight: .bold, design: .default))
+                        .foregroundStyle(Color(.Color.colorTextSelected))
                     
                     Spacer()
                 }
