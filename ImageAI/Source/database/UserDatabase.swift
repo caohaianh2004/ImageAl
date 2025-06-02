@@ -77,9 +77,7 @@ class UserDatabase {
             return await withCheckedContinuation { continuation in
                 var images: [ImageUser] = []
                 let query = "SELECT * FROM image_user"
-                
-              
-                
+   
                 do {
                     let results = try database?.executeQuery(query, values: nil)
                     while results?.next() == true {

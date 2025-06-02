@@ -7,6 +7,8 @@ struct BackMulti: View {
     @Binding var selectionImage: UIImage?
     @Binding var imageUrl: URL?
     @Binding var styleId: Int
+    @State private var selectedFaceIndex: Int? = nil
+
 
     let croppingOptions = CroppedPhotosPickerOptions(doneButtonTitle: "Select", doneButtonColor: .orange)
     @State private var filteredFaces = [StyleFaceCrop]()
@@ -102,9 +104,12 @@ struct BackMulti: View {
             }) else {
                 return
             }
+            
             filteredFaces = origin
+
             faceImages = Array(repeating: nil, count: filteredFaces.count)
         }
+
         .onChange(of: styleId) { _, newId in
             if selectionImage == nil {
                 filteredFaces = dsFaceCrop.filter { $0.parentId == newId }

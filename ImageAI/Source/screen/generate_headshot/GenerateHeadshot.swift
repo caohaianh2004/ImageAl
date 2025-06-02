@@ -384,4 +384,6 @@ struct GenerateHeadshot: View {
     }
 }
 
-
+//#Preview {
+//    GenerateHeadshot(enhanceViewModel: EnhanceRestoreViewModel(repository: AppDIContainer.shared.appRepository))
+//}

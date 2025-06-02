@@ -14,7 +14,7 @@ struct StyleFaceCrop:  Identifiable, Codable, Hashable{
 }
 
 class Facecrop: ObservableObject {
-    @Published var facecrop: [StyleFaceCrop] = []
+    @Published var facecrop: [StyleFaceCrop] 
     init(Datafacecrop: [StyleFaceCrop]) {
         self.facecrop = Datafacecrop
     }

@@ -35,11 +35,8 @@ struct MultiSwapFace: View {
                         .padding(5)
                         .bold()
                 }
-                
                 styleSelectionScrollView()
-                
                 buttonFaceSwap()
-                
             }
         }
         .popup(isPresented: Binding (
@@ -74,9 +71,7 @@ struct MultiSwapFace: View {
                     .build()
                 await userViewModel.addImage(imageUser)
             }
-            
             let request = MultiSFace(original: "", images: [])
-            
             enhanceViewModel.cleanState()
             router.navigateTo(.result_multiface(befoImage, nil, request, false, origin, false))
         }
@@ -91,7 +86,7 @@ struct MultiSwapFace: View {
                         befoImage = nil
                         imageUrl = URL(string: item.imageName)
                         styleId = item.id
-                    }label: {
+                    } label: {
                         ZStack {
                             KFImage(URL(string: item.imageName))
                                 .placeholder {
@@ -142,6 +137,7 @@ struct MultiSwapFace: View {
         }
     }
     
+    @ViewBuilder
     func buttonFaceSwap() -> some View {
         FaceSwapButtonView (
             isShowButton: befoImage != nil && (!faceImages.isEmpty || selectionImage != nil || imageUrl != nil),

@@ -27,7 +27,7 @@ struct StyleHeadShot: Identifiable, Codable, Hashable {
 }
 
 class HeadShots: ObservableObject {
-    @Published var headshot: [StyleHeadShot] = []
+    @Published var headshot: [StyleHeadShot] 
     
     init(Dataheadshot: [StyleHeadShot]) {
         self.headshot = Dataheadshot

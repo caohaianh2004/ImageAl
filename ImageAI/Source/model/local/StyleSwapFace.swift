@@ -19,7 +19,7 @@ struct StyleSwapFace: Identifiable, Codable, Hashable {
     }
 }
 class SwapfaceModel: ObservableObject {
-    @Published var  swapface: [StyleSwapFace] = []
+    @Published var  swapface: [StyleSwapFace] 
     init(Dataswapface: [StyleSwapFace]) {
         self.swapface = Dataswapface
     }

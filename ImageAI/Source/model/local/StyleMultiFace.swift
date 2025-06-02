@@ -18,7 +18,7 @@ struct StyleMultiFace: Identifiable, Codable, Hashable {
 }
 
 class MultiFace: ObservableObject {
-    @Published var multiface: [StyleMultiFace] = []
+    @Published var multiface: [StyleMultiFace]
     
     init(Datamultiface: [StyleMultiFace]) {
         self.multiface = Datamultiface
